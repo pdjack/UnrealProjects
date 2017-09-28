@@ -4,7 +4,7 @@
 
 #include "BuildingEscape.h"
 #include "GameFramework/Actor.h"
-
+#include "Runtime/Engine/Classes/Engine/TriggerVolume.h"
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
 {
