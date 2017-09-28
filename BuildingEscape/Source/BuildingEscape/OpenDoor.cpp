@@ -4,7 +4,9 @@
 
 #include "BuildingEscape.h"
 #include "GameFramework/Actor.h"
-#include "Runtime/Engine/Classes/Engine/TriggerVolume.h"
+#include "Engine/TriggerVolume.h"
+#include "Engine/World.h"
+#include "GameFramework/PlayerController.h"
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
 {
@@ -21,6 +23,12 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
+	ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
+}
+
+
+void UOpenDoor::OpenDoor()
+{
 	// Find the owning Actor
 	AActor* Owner = GetOwner();
 
@@ -34,15 +42,21 @@ void UOpenDoor::BeginPlay()
 
 
 	UE_LOG(LogTemp, Warning, TEXT("name= %s"), *ObjectName);
-	
-}
 
+}
 
 // Called every frame
 void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	// Poll the Trigger Volume
+	// If the ActorThatOpens is in the volume
+	if (PressurePlate->IsOverlappingActor(ActorThatOpens))
+	{
+		
+		OpenDoor();
+	}
+	
 }
 
