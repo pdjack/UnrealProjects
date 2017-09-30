@@ -31,10 +31,10 @@ private:
 	float OpenAngle = -90.0f;
 
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume * PressurePlate;
+	ATriggerVolume * PressurePlate = nullptr;
 
 	//UPROPERTY(EditAnywhere)
-	AActor* ActorThatOpens; // Remember pawn inhrerits from actor
+	//AActor* ActorThatOpens = nullptr; // Remember pawn inhrerits from actor
 
 	AActor* Owner = nullptr;
 
@@ -45,4 +45,6 @@ private:
 
 	void OpenDoor();
 	void CloseDoor();
+
+	float GetTotalMassOfActorOnPlate();
 };
