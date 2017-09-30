@@ -4,18 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "OpenDoor.generated.h"
+#include "Grabber.generated.h"
 
-class ATriggerVolume;
+class UPhysicsHandleComponent;
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class BUILDINGESCAPE_API UOpenDoor : public UActorComponent
+class BUILDINGESCAPE_API UGrabber : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UOpenDoor();
+	UGrabber();
 
 protected:
 	// Called when the game starts
@@ -25,24 +26,25 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
 private:
-	UPROPERTY(EditAnywhere)
-	float OpenAngle = -90.0f;
+	// How far ahead of the player can we reach 
+	float Reach = 100.0f;
 
-	UPROPERTY(EditAnywhere)
-	ATriggerVolume * PressurePlate;
-
-	//UPROPERTY(EditAnywhere)
-	AActor* ActorThatOpens; // Remember pawn inhrerits from actor
-
-	AActor* Owner = nullptr;
-
-	float LastDoorOpenTime = 0.0f;
+	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+		
+	UInputComponent* InputComponent = nullptr;
 	
-	UPROPERTY(EditAnywhere)
-	float DoorOpenDurationTime = 3.0f;
+	// Ray-cast and grab what's in reach 
+	void Grab();
 
-	void OpenDoor();
-	void CloseDoor();
+	//
+	void Release();
+
+
+	void FindPhysicsHandleComponent();
+
+	void SetupInputComponent();
+
+	// Return hit for first physics body in reach
+	const FHitResult GetFirstPhysicsBodyBodyInReach() ;
 };
