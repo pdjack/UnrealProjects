@@ -41,13 +41,11 @@ void UOpenDoor::BeginPlay()
 void UOpenDoor::OpenDoor()
 {
 
-	if (Owner == nullptr) { return; }
+	//if (Owner == nullptr) { return; }
 	// Set the door rotation
-	Owner->SetActorRotation(FRotator(0.0f, OpenAngle, 0.0f));
+	//Owner->SetActorRotation(FRotator(0.0f, OpenAngle, 0.0f));
 
-	//FString ObjectName = GetOwner()->GetName();
-	//UE_LOG(LogTemp, Warning, TEXT("name= %s"), *ObjectName);
-
+	OnOpenRequest.Broadcast();
 }
 
 void UOpenDoor::CloseDoor()
